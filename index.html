@@ -36,9 +36,6 @@
       <div class="flex justify-between items-center">
         <!-- Logo -->
         <a href="#" class="group flex items-center space-x-2 text-white">
-          <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center transform transition-all duration-300 group-hover:rotate-6 group-hover:scale-110">
-            <span class="font-bold text-xl">{ </span><span class="text-xl"> }</span>
-          </div>
           <div class="flex flex-col">
             <span class="text-2xl font-bold tracking-tight leading-none">Ny Haritina</span>
             <span class="text-xs text-gray-400 tracking-widest uppercase">Backend Developer</span>
@@ -68,19 +65,6 @@
               </li>
             </ul>
           </div>
-        </div>
-        
-        <!-- Social Links (Desktop) -->
-        <div class="hidden md:flex items-center space-x-3">
-          <a href="https://github.com/ny-haritina10" class="text-white opacity-70 hover:opacity-100 transition-all p-2 hover:text-blue-400">
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="https://www.linkedin.com/in/rabemanantsoa-ny-haritina-593b47238/" class="text-white opacity-70 hover:opacity-100 transition-all p-2 hover:text-blue-500">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="#contact" class="ml-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-0.5">
-            Contact Me
-          </a>
         </div>
         
         <!-- Mobile Menu Button -->
@@ -157,26 +141,26 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen bg-black text-white flex items-center relative overflow-hidden">
+    <section id="home" class="min-h-screen bg-black text-white flex items-center justify-center relative overflow-hidden">
       <!-- Animated background particles -->
-      <div id="particles-js" class="absolute inset-0"></div>
+      <div id="particles-js" class="absolute inset-1"></div>
       
       <!-- Gradient overlay -->
       <div class="absolute w-full h-full bg-gradient-to-br from-gray-900 to-black opacity-90 z-0"></div>
       
       <div class="container mx-auto px-6 py-20 z-10 relative">
-        <div class="flex flex-col md:flex-row items-center">
-          <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right" data-aos-duration="1000">
+        <div class="flex flex-col md:flex-row items-center justify-center">
+          <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left" data-aos="fade-right" data-aos-duration="1000">
             <div class="overflow-hidden">
               <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
                 <span class="block typewriter-text">Backend Developer.</span>
                 <span class="block text-gray-400 typewriter-text-2">CS Student.</span>
               </h1>
             </div>
-            <p class="text-xl text-gray-300 mb-8 max-w-lg" data-aos="fade-up" data-aos-delay="200">
+            <p class="text-xl text-gray-300 mb-8 max-w-lg mx-auto md:mx-0" data-aos="fade-up" data-aos-delay="200">
               Crafting robust backend solutions with Spring Boot, Laravel, and modern web technologies.
             </p>
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start" data-aos="fade-up" data-aos-delay="400">
               <a href="#contact" class="bg-white text-black px-8 py-3 rounded-md font-medium hover:bg-gray-200 transition-all transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center group">
                 <span>Get in Touch</span>
                 <i class="fas fa-arrow-right ml-2 transform transition-transform group-hover:translate-x-1"></i>
@@ -204,7 +188,15 @@
         <!-- Tech stack icons -->
         <div class="mt-16 flex justify-center" data-aos="fade-up" data-aos-delay="600">
           <div class="tech-stack-slider">
-            <div class="flex space-x-8">
+            <div class="flex space-x-8 tech-stack-content">
+              <div class="tech-icon"><i class="fab fa-java text-3xl"></i></div>
+              <div class="tech-icon"><i class="fab fa-php text-3xl"></i></div>
+              <div class="tech-icon"><i class="fab fa-vuejs text-3xl"></i></div>
+              <div class="tech-icon"><i class="fab fa-html5 text-3xl"></i></div>
+              <div class="tech-icon"><i class="fab fa-css3-alt text-3xl"></i></div>
+              <div class="tech-icon"><i class="fab fa-js text-3xl"></i></div>
+              <div class="tech-icon"><i class="fab fa-node-js text-3xl"></i></div>
+              <div class="tech-icon"><i class="fab fa-docker text-3xl"></i></div>
               <div class="tech-icon"><i class="fab fa-java text-3xl"></i></div>
               <div class="tech-icon"><i class="fab fa-php text-3xl"></i></div>
               <div class="tech-icon"><i class="fab fa-vuejs text-3xl"></i></div>
@@ -219,7 +211,7 @@
       </div>
       
       <!-- Scroll indicator -->
-      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+      <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10">
         <a href="#about" class="text-white opacity-75 hover:opacity-100 transition-opacity scroll-indicator">
           <span class="block text-sm mb-2 text-center">Scroll Down</span>
           <div class="w-6 h-10 border-2 border-white rounded-full mx-auto flex justify-center">
