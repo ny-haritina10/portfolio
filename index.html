@@ -165,7 +165,7 @@
                 <span>Get in Touch</span>
                 <i class="fas fa-arrow-right ml-2 transform transition-transform group-hover:translate-x-1"></i>
               </a>
-              <a href="#" class="border border-white text-white px-8 py-3 rounded-md font-medium hover:bg-white hover:text-black transition-all transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center group">
+              <a @click="downloadCV" class="border border-white text-white px-8 py-3 rounded-md font-medium hover:bg-white hover:text-black transition-all transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center group" style="cursor: pointer;">
                 <span>Download CV</span>
                 <i class="fas fa-download ml-2 transform transition-all group-hover:scale-110"></i>
               </a>
@@ -228,7 +228,7 @@
           <h2 class="text-3xl md:text-4xl font-bold">About Me</h2>
           <div class="w-16 h-1 bg-black mx-auto mt-4"></div>
         </div>
-        <div class="flex flex-col md:flex-row items-center">
+        <div class="flex flex-col md:flex-row items-center justify-center">
           <div class="md:w-1/2 mb-10 md:mb-0 fade-in-element">
             <div class="relative">
               <div class="absolute -inset-1 bg-gradient-to-r from-gray-400 to-gray-700 rounded-lg blur opacity-25"></div>
@@ -391,13 +391,12 @@
           { name: 'REST API', icon: 'fas fa-exchange-alt' },
           { name: 'Node.js', icon: 'fab fa-node-js' },
           { name: 'Laravel', icon: 'fab fa-laravel' }, 
-          { name: 'MVC', icon: 'fas fa-project-diagram' }, // used a generic architecture-like icon
+          { name: 'MVC', icon: 'fas fa-project-diagram' }, 
           { name: 'Tailwind CSS', icon: 'fab fa-css3' },
-          { name: 'Oracle', icon: 'fas fa-database' } // same icon used as MySQL if no better one
+          { name: 'Oracle', icon: 'fas fa-database' } 
         ];
 
-
-        // Simulate loading
+        // loading
         onMounted(() => {
           let loadingInterval = setInterval(() => {
             loadingProgress.value += Math.floor(Math.random() * 10) + 1;
@@ -421,17 +420,13 @@
             }
           }, 100);
 
-          // Scroll event for navbar
           window.addEventListener('scroll', () => {
             scrolled.value = window.scrollY > 50;
           });
         });
 
-        // Initialize GSAP animations
         const initAnimations = () => {
           gsap.registerPlugin(ScrollTrigger);
-
-          // Fade in elements on scroll
           gsap.utils.toArray('.fade-in-element').forEach((element) => {
             gsap.from(element, {
               opacity: 0,
@@ -449,23 +444,15 @@
         const activeNavItem = ref(null);
         const activeNavPosition = ref({ left: 0, width: 0 });
         
-        // Initialize active nav item
         onMounted(() => {
-          // Set initial active based on scroll position
           updateActiveNavOnScroll();
-          
-          // Update active nav on scroll
           window.addEventListener('scroll', updateActiveNavOnScroll);
         });
         
-        // Update active navigation based on scroll position
         const updateActiveNavOnScroll = () => {
           const scrollPosition = window.scrollY + window.innerHeight / 3;
-          
-          // Get all sections
           const sections = document.querySelectorAll('section[id]');
           
-          // Find the current section
           for (const section of sections) {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.offsetHeight;
@@ -477,18 +464,14 @@
           }
         };
         
-        // Set active nav item and update highlight position
         const setActiveNavItem = (href, event = null) => {
           activeNavItem.value = href;
           
-          // Update position of the highlight
           nextTick(() => {
-            // Find the ref for this nav item
             const id = navItems.find(item => item.href === href)?.id;
             if (id) {
               const navElement = document.querySelector(`a[href="${href}"]`);
               if (navElement) {
-                // Get position and width
                 const rect = navElement.getBoundingClientRect();
                 const navbarRect = document.querySelector('nav').getBoundingClientRect();
                 
@@ -500,13 +483,21 @@
             }
           });
           
-          // If this was triggered by a click, prevent the immediate scroll
           if (event) {
-            // Let the highlight update before scrolling
             setTimeout(() => {
-              // Allow default behavior to continue after a brief delay
             }, 10);
           }
+        };
+
+        const downloadCV = () => {
+          const cvUrl = './assets/resume.pdf'; 
+
+          const link = document.createElement('a');
+          link.href = cvUrl;
+          link.download = 'my-resume.pdf'; 
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         };
 
         return {
@@ -522,6 +513,7 @@
           activeNavPosition,
           setActiveNavItem,
           updateActiveNavOnScroll,
+          downloadCV 
         };
       }
     }).mount('#app');
@@ -529,10 +521,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Initialize AOS
       AOS.init();
-      
-      // Initialize particles.js
       particlesJS('particles-js', {
         "particles": {
           "number": {
@@ -553,7 +542,7 @@
             },
           },
           "opacity": {
-            "value": 0.5,
+            "value": 3,
             "random": true,
           },
           "size": {
@@ -564,7 +553,7 @@
             "enable": true,
             "distance": 150,
             "color": "#ffffff",
-            "opacity": 0.4,
+            "opacity": 2,
             "width": 1
           },
           "move": {
@@ -605,7 +594,6 @@
         "retina_detect": true
       });
       
-      // Typewriter effect
       const typeWriterEffect = (element, text, delay = 100) => {
         let i = 0;
         element.textContent = '';
@@ -648,90 +636,89 @@
       font-family: 'Montserrat', sans-serif;
     }
 
-    /* Rotating circles animation */
-  .rotating-circles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 2px dashed rgba(255, 255, 255, 0.3);
-    animation: rotate 20s linear infinite;
-  }
-  
-  .rotating-circles::before {
-    content: '';
-    position: absolute;
-    top: -15px;
-    left: -15px;
-    right: -15px;
-    bottom: -15px;
-    border-radius: 50%;
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    animation: rotate 15s linear infinite reverse;
-  }
-  
-  @keyframes rotate {
-    0% {
-      transform: rotate(0deg);
+    .rotating-circles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      animation: rotate 20s linear infinite;
     }
-    100% {
-      transform: rotate(360deg);
+    
+    .rotating-circles::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      right: -15px;
+      bottom: -15px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      animation: rotate 15s linear infinite reverse;
     }
-  }
-  
-  /* Tech stack slider */
-  .tech-stack-slider {
-    overflow: hidden;
-    width: 100%;
-    max-width: 600px;
-  }
-  
-  .tech-stack-slider .flex {
-    animation: slide 20s linear infinite;
-  }
-  
-  .tech-icon {
-    opacity: 0.7;
-    transition: all 0.3s ease;
-    padding: 8px;
-  }
-  
-  .tech-icon:hover {
-    opacity: 1;
-    transform: translateY(-5px);
-  }
-  
-  @keyframes slide {
-    0% {
-      transform: translateX(0);
+    
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
-    100% {
-      transform: translateX(-100%);
+    
+    /* Tech stack slider */
+    .tech-stack-slider {
+      overflow: hidden;
+      width: 100%;
+      max-width: 600px;
     }
-  }
-  
-  /* Scroll indicator */
-  .scroll-indicator {
-    animation: fadeInOut 2s ease-in-out infinite;
-  }
-  
-  @keyframes fadeInOut {
-    0%, 100% {
-      opacity: 0.5;
+    
+    .tech-stack-slider .flex {
+      animation: slide 20s linear infinite;
     }
-    50% {
+    
+    .tech-icon {
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      padding: 8px;
+    }
+    
+    .tech-icon:hover {
       opacity: 1;
+      transform: translateY(-5px);
     }
-  }
+    
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    
+    /* Scroll indicator */
+    .scroll-indicator {
+      animation: fadeInOut 2s ease-in-out infinite;
+    }
+    
+    @keyframes fadeInOut {
+      0%, 100% {
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  nav a {
-    transition: all 0.3s ease;
-  }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    nav a {
+      transition: all 0.3s ease;
+    }
   </style>
 </body>
 </html>
