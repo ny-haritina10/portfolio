@@ -490,14 +490,26 @@
         };
 
         const downloadCV = () => {
-          const cvUrl = './assets/resume.pdf'; 
-
-          const link = document.createElement('a');
-          link.href = cvUrl;
-          link.download = 'my-resume.pdf'; 
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          const cvUrl = '/public/resume.pdf';
+          fetch(cvUrl)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('PDF not found');
+              }
+              return response.blob();
+            })
+            .then(blob => {
+              const link = document.createElement('a');
+              link.href = URL.createObjectURL(blob);
+              link.download = 'my-resume.pdf';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            })
+            .catch(error => {
+              console.error('Error downloading PDF:', error);
+              alert('Sorry, the resume file could not be found.');
+            });
         };
 
         return {
