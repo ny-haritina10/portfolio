@@ -28,24 +28,132 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-40 transition-all duration-500" :class="{'bg-black bg-opacity-90 shadow-lg': scrolled, 'bg-transparent': !scrolled}">
-      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#" class="text-2xl font-bold text-white transition-all hover:text-gray-300">CS.Portfolio</a>
-        <div class="hidden md:flex space-x-8">
-          <a v-for="item in navItems" :key="item.id" :href="item.href" class="text-white hover:text-gray-300 transition-all">{{ item.text }}</a>
+    <nav 
+    class="fixed top-0 left-0 w-full z-40 transition-all duration-500" 
+    :class="{'bg-black bg-opacity-90 backdrop-blur-sm shadow-lg': scrolled, 'bg-transparent': !scrolled}"
+    >
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex justify-between items-center">
+        <!-- Logo -->
+        <a href="#" class="group flex items-center space-x-2 text-white">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center transform transition-all duration-300 group-hover:rotate-6 group-hover:scale-110">
+            <span class="font-bold text-xl">{ </span><span class="text-xl"> }</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-2xl font-bold tracking-tight leading-none">Ny Haritina</span>
+            <span class="text-xs text-gray-400 tracking-widest uppercase">Backend Developer</span>
+          </div>
+        </a>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:block">
+          <div class="relative">
+            <!-- Nav Background Highlight -->
+            <div class="absolute top-0 h-10 bg-white bg-opacity-10 rounded-full transition-all duration-300 -z-10" 
+                :style="{ left: activeNavPosition.left + 'px', width: activeNavPosition.width + 'px' }"
+                v-if="activeNavItem"></div>
+            
+            <!-- Nav Items -->
+            <ul class="flex space-x-1">
+              <li v-for="item in navItems" :key="item.id" class="relative">
+                <a 
+                  :href="item.href" 
+                  class="px-5 py-2 rounded-full text-white opacity-80 hover:opacity-100 transition-all block text-sm font-medium"
+                  :class="{'opacity-100': activeNavItem === item.href}"
+                  @click="setActiveNavItem(item.href, $event)"
+                  :ref="`navItem_${item.id}`"
+                >
+                  {{ item.text }}
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-white focus:outline-none">
-          <i class="fas fa-bars text-xl"></i>
+        
+        <!-- Social Links (Desktop) -->
+        <div class="hidden md:flex items-center space-x-3">
+          <a href="https://github.com/ny-haritina10" class="text-white opacity-70 hover:opacity-100 transition-all p-2 hover:text-blue-400">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/rabemanantsoa-ny-haritina-593b47238/" class="text-white opacity-70 hover:opacity-100 transition-all p-2 hover:text-blue-500">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="#contact" class="ml-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-0.5">
+            Contact Me
+          </a>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button 
+          @click="mobileMenuOpen = !mobileMenuOpen" 
+          class="md:hidden text-white focus:outline-none w-10 h-10 flex items-center justify-center rounded-full hover:bg-white hover:bg-opacity-10"
+          :aria-expanded="mobileMenuOpen"
+          aria-controls="mobile-menu"
+        >
+          <span class="sr-only">Open main menu</span>
+          <!-- Icon when menu is closed -->
+          <svg 
+            :class="{'hidden': mobileMenuOpen, 'block': !mobileMenuOpen }"
+            class="h-6 w-6" 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <!-- Icon when menu is open -->
+          <svg 
+            :class="{'block': mobileMenuOpen, 'hidden': !mobileMenuOpen }"
+            class="h-6 w-6" 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
-      <!-- Mobile Menu -->
-      <div v-if="mobileMenuOpen" class="md:hidden bg-black bg-opacity-95 absolute w-full">
-        <div class="container mx-auto px-6 py-4">
-          <div class="flex flex-col space-y-4">
-            <a v-for="item in navItems" :key="item.id" :href="item.href" @click="mobileMenuOpen = false" class="text-white hover:text-gray-300 transition-all py-2 border-b border-gray-800">{{ item.text }}</a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div 
+      v-show="mobileMenuOpen" 
+      class="md:hidden transition-all duration-300"
+      :class="{'opacity-100 translate-y-0': mobileMenuOpen, 'opacity-0 -translate-y-5': !mobileMenuOpen}"
+      id="mobile-menu"
+    >
+      <div class="bg-gradient-to-b from-black to-gray-900 pt-4 pb-6 shadow-xl">
+        <div class="container mx-auto px-6">
+          <div class="grid grid-cols-1 gap-y-4">
+            <a 
+              v-for="item in navItems" 
+              :key="item.id" 
+              :href="item.href" 
+              @click="mobileMenuOpen = false" 
+              class="text-white flex items-center py-3 border-b border-gray-700/50 hover:bg-white hover:bg-opacity-5 -mx-6 px-6 transition-colors"
+            >
+              <i class="fas fa-chevron-right mr-3 text-xs text-blue-400"></i>
+              {{ item.text }}
+            </a>
+          </div>
+          
+          <!-- Social Links (Mobile) -->
+          <div class="flex justify-center space-x-6 mt-8">
+            <a href="https://github.com/ny-haritina10" class="text-white opacity-70 hover:opacity-100 transition-all">
+              <i class="fab fa-github text-xl"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/rabemanantsoa-ny-haritina-593b47238/" class="text-white opacity-70 hover:opacity-100 transition-all">
+              <i class="fab fa-linkedin-in text-xl"></i>
+            </a>
+            <a href="https://x.com/dax_nh" class="text-white opacity-70 hover:opacity-100 transition-all">
+              <i class="fab fa-twitter text-xl"></i>
+            </a>
           </div>
         </div>
       </div>
+    </div>
     </nav>
 
     <!-- Hero Section -->
@@ -243,7 +351,7 @@
   </div>
 
   <script>
-    const { createApp, ref, onMounted, computed } = Vue;
+    const { createApp, ref, onMounted, computed, nextTick } = Vue;
 
     createApp({
       setup() {
@@ -345,6 +453,69 @@
           });
         };
 
+        const activeNavItem = ref(null);
+        const activeNavPosition = ref({ left: 0, width: 0 });
+        
+        // Initialize active nav item
+        onMounted(() => {
+          // Set initial active based on scroll position
+          updateActiveNavOnScroll();
+          
+          // Update active nav on scroll
+          window.addEventListener('scroll', updateActiveNavOnScroll);
+        });
+        
+        // Update active navigation based on scroll position
+        const updateActiveNavOnScroll = () => {
+          const scrollPosition = window.scrollY + window.innerHeight / 3;
+          
+          // Get all sections
+          const sections = document.querySelectorAll('section[id]');
+          
+          // Find the current section
+          for (const section of sections) {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+              setActiveNavItem('#' + section.getAttribute('id'));
+              break;
+            }
+          }
+        };
+        
+        // Set active nav item and update highlight position
+        const setActiveNavItem = (href, event = null) => {
+          activeNavItem.value = href;
+          
+          // Update position of the highlight
+          nextTick(() => {
+            // Find the ref for this nav item
+            const id = navItems.find(item => item.href === href)?.id;
+            if (id) {
+              const navElement = document.querySelector(`a[href="${href}"]`);
+              if (navElement) {
+                // Get position and width
+                const rect = navElement.getBoundingClientRect();
+                const navbarRect = document.querySelector('nav').getBoundingClientRect();
+                
+                activeNavPosition.value = {
+                  left: rect.left - navbarRect.left,
+                  width: rect.width
+                };
+              }
+            }
+          });
+          
+          // If this was triggered by a click, prevent the immediate scroll
+          if (event) {
+            // Let the highlight update before scrolling
+            setTimeout(() => {
+              // Allow default behavior to continue after a brief delay
+            }, 10);
+          }
+        };
+
         return {
           loading,
           loadingProgress,
@@ -353,7 +524,11 @@
           scrolled,
           navItems,
           primarySkills,
-          additionalSkills
+          additionalSkills,
+          activeNavItem, 
+          activeNavPosition,
+          setActiveNavItem,
+          updateActiveNavOnScroll,
         };
       }
     }).mount('#app');
@@ -554,6 +729,15 @@
     50% {
       opacity: 1;
     }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  nav a {
+    transition: all 0.3s ease;
   }
   </style>
 </body>
